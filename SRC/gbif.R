@@ -2,12 +2,12 @@
 # Query species current data from GBIF
 # Clean up the data
 # Save it to a csv file
-# Create a map to display species occurence points
+# Create a map to display species occurrence points
 
 # List of packages
 packages<-c("tidyverse","rgbif","usethis", "CoordinateCleaner", "leaflet", "mapview")
 
-#instal packages not yet installed
+#install packages not yet installed
 installed_packages<-packages %in% rownames(installed.packages())
 if(any(installed_packages==FALSE)){
   install.packages(packages[!installed_packages])
@@ -21,9 +21,30 @@ usethis::edit_r_environ()
 spiderBackbone<-name_backbone(name="Habronattus americanus")
 speciesKey<-spiderBackbone$usageKey
 
-# Getting data from GBIF
+# Getting raw data from GBIF
 
 occ_download(pred("taxonKey", speciesKey),format="SIMPLE_CSV")
 
-d<- occ_download_get( 'number from' ), path="data/"%>%
+
+d <- occ_download_get('0012257-240202131308920') %>%
+  occ_download_import()
+
+View(d)
+
 write_csv(d, "data/rawData.csv")
+
+# Cleaning and Filtering Out Data
+
+fData<-d %>%
+  filter(!is.na(decimalLatitude), !is.na(decimalLongitude))
+
+fData <-fData %>%
+  filter(countryCode %in% c("US", "CA", "MX"))
+
+fData <- fData %>%
+  filter(!basisOfRecord %in% c("FOSSIL_SPECIMAN", "LIVING_SPECIMEN"))
+
+fData <-fData %>%
+  cc_sea(lon="decimalLongitude", lat="decimalLatitude")
+
+
