@@ -47,4 +47,19 @@ fData <- fData %>%
 fData <-fData %>%
   cc_sea(lon="decimalLongitude", lat="decimalLatitude")
 
+fData<-fData %>%
+  distinct(decimalLongitude, decimalLatitude, speciesKey, datasetKey, .keep_all=TRUE)
+
+# Can clean in one fell swoop
+# cleanData<-d %>%
+#   filter(!is.na(decimalLatitude), !is.na(decimalLongitude)) %>%
+#   filter(!basisOfRecord %in% c("FOSSIL_SPECIMAN", "LIVING_SPECIMEN")) %>%
+#   filter(countryCode %in% c("US", "CA", "MX")) %>%
+#   cc_sea(lon="decimalLongitude", lat="decimalLatitude") %>%
+#   distinct(decimalLongitude, decimalLatitude, speciesKey, datasetKey, .keep_all=TRUE)
+  
+  
+  
+ 
+
 
