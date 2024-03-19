@@ -50,6 +50,11 @@ fData <-fData %>%
 fData<-fData %>%
   distinct(decimalLongitude, decimalLatitude, speciesKey, datasetKey, .keep_all=TRUE)
 
+write.csv(fData, "data/cleanedData.csv")
+
+
+
+
 # Can clean in one fell swoop
 # cleanData<-d %>%
 #   filter(!is.na(decimalLatitude), !is.na(decimalLongitude)) %>%
@@ -58,6 +63,10 @@ fData<-fData %>%
 #   cc_sea(lon="decimalLongitude", lat="decimalLatitude") %>%
 #   distinct(decimalLongitude, decimalLatitude, speciesKey, datasetKey, .keep_all=TRUE)
   
+
+
+
+
   
   
  
